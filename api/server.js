@@ -28,7 +28,13 @@ app.get("/api/contacts", async (req, res) => {
 
 // GET a SINGLE contact
 app.get("/api/contact/:id", async (req, res) => {
-	const contact = await Contact.findById(req.params.id);
+	const { id } = req.params;
+
+	const contact = await Contact.findById(id);
+
+	if (!contact) {
+		return res.status(400).json({ error: "No such contact" });
+	}
 
 	res.status(200).json(contact);
 });
@@ -50,7 +56,31 @@ app.post("/api/contact/new", (req, res) => {
 
 // DELETE a contact
 app.delete("/api/contact/:id", async (req, res) => {
-	const contact = await Contact.findByIdAndDelete(req.params.id);
+	const { id } = req.params;
+
+	const contact = await Contact.findByIdAndDelete(id);
+
+	if (!contact) {
+		return res.status(400).json({ error: "No such contact to delete" });
+	}
+
+	res.status(200).json(contact);
+});
+
+// UPDATE a contact
+app.patch("/api/contact/:id", async (req, res) => {
+	const { id } = req.params;
+
+	const contact = await Contact.findByIdAndUpdate(
+		{ _id: id },
+		{
+			...req.body,
+		}
+	);
+
+	if (!contact) {
+		return res.status(400).json({ error: "No such contact edit" });
+	}
 
 	res.status(200).json(contact);
 });
