@@ -8,12 +8,14 @@ import RootLayout from "./layouts/RootLayout";
 import Home from "./pages/Home";
 import NewContact from "./pages/NewContact";
 import PageNotFound from "./pages/PageNotFound";
+import Contact from "./pages/Contact";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route path="/" element={<RootLayout />}>
 			<Route index element={<Home />} />
 			<Route path="new" element={<NewContact />} />
+			<Route path="contact/:id" element={<Contact />} />
 			<Route path="*" element={<PageNotFound />} />
 		</Route>
 	)
